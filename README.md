@@ -40,3 +40,84 @@ Poetry 環境でなくても pyproject.toml > `[tool.poetry.dependencies]` で�
 高速実行するために用意したファイルで，動作させるには実行環境で cupy パッケージのインストールが必要．
 
 Note: 実行に utils_cp.py が必要なことがある（gp_cupy.py）．
+
+## コードの使用方法
+
+### Figure 2 (a), (b)
+
+source: regression_6class() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+0 (Classification with 6 class) を入力する．
+
+### Figure 3
+
+source relation_between_unit_size_and_accuracy() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+2 (Relation between Number of units and accuracy) を入力する．
+
+### Figure 4 (a), (b)
+
+source: regression_24class() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+1 (Classification with 24 class) を入力する．
+
+### Figure 5 (a)-(f)
+
+source: untrained() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+10 (untrained) を入力する．
+また，学習しないクラスは数字で指定する．
+
+
+### Figure 6
+
+source: robustness() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+11 (robustness) を入力する．
+
+### Figure 7
+
+source: delay_expansion() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+7 (delay expansion) を入力する．
+
+### Figure 8
+
+source: relation_between_unit_size_and_accuracy_by_logistic() in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+5 (Relation between Number of units and accuracy by logistic regression) を入力する．
