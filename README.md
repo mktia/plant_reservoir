@@ -45,7 +45,7 @@ Note: 実行に utils_cp.py が必要なことがある（gp_cupy.py）．
 
 ### Figure 2 (a), (b)
 
-source: regression_6class() in [classify.py](classify.py)
+source: `regression_6class()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
@@ -56,7 +56,7 @@ $ python classify.py
 
 ### Figure 3
 
-source relation_between_unit_size_and_accuracy() in [classify.py](classify.py)
+source `relation_between_unit_size_and_accuracy()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
@@ -67,7 +67,7 @@ $ python classify.py
 
 ### Figure 4 (a), (b)
 
-source: regression_24class() in [classify.py](classify.py)
+source: `regression_24class()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
@@ -78,7 +78,7 @@ $ python classify.py
 
 ### Figure 5 (a)-(f)
 
-source: untrained() in [classify.py](classify.py)
+source: `untrained()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
@@ -91,7 +91,7 @@ $ python classify.py
 
 ### Figure 6
 
-source: robustness() in [classify.py](classify.py)
+source: `robustness()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
@@ -102,7 +102,7 @@ $ python classify.py
 
 ### Figure 7
 
-source: delay_expansion() in [classify.py](classify.py)
+source: `delay_expansion()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
@@ -113,7 +113,7 @@ $ python classify.py
 
 ### Figure 8
 
-source: relation_between_unit_size_and_accuracy_by_logistic() in [classify.py](classify.py)
+source: `relation_between_unit_size_and_accuracy_by_logistic()` in [classify.py](classify.py)
 
 ```
 $ python classify.py
