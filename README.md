@@ -121,3 +121,33 @@ $ python classify.py
 
 実行後にターミナルに表示されるダイアログで
 5 (Relation between Number of units and accuracy by logistic regression) を入力する．
+
+
+### Supplementary Figure 1 (a), (b)
+
+source: `regression_6class()` in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+0 (Classification with 6 class) を入力する．
+
+### Supplementary Figure 2 (a), (b)
+
+source: `regression_24class()` in [classify.py](classify.py)
+
+```
+$ python classify.py
+```
+
+実行後にターミナルに表示されるダイアログで
+1 (Classification with 24 class) を入力する．
+### Supplementary Figure 3
+
+source: [3d_graph.py](3d_graph.py)
+
+```
+$ python 3d_graph.py
+```
