@@ -30,7 +30,7 @@ def pooling(image: np.ndarray, in_h: int, in_w: int, out_h: int, out_w: int, in_
 
 
 if __name__ == '__main__':
-    file_type = (('mp4ファイル', '*.mp4'), ('movファイル', '*.mov'))
+    file_type = (('mp4 file', '*.mp4'), ('mov file', '*.mov'))
     init_dir = './video_in'
     root = Tk()
     root.filename = filedialog.askopenfilename(filetypes=file_type, initialdir=init_dir)

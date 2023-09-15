@@ -71,7 +71,7 @@ def main():
             video_writer.write(new_frame)
 
         k = cv2.waitKey(30) & 0xff
-        # ESC キーで終了
+        # ESC key to exit
         if k == 27:
             print('Pressed ESC key and stopped the video')
             break

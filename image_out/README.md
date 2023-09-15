@@ -1,3 +1,3 @@
 # image_out directory
 
-プログラムで出力した画像を保存するディレクトリ．
+Directory where images output by the program are stored.

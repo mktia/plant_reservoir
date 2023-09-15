@@ -9,18 +9,18 @@ from utils import FileController
 
 
 def main():
-    """Shi-Tomasi Corner Detector ＆ Optical Flow を用いた特徴点追跡
-    入力順に複数動画を連結して追跡する
+    """Feature point tracking using Shi-Tomasi Corner Detector ＆ Optical Flow.
+    Concatenate and track multiple videos in input order.
     
     """
-    # device_idで指定すれば撮影している映像をリアルタイムで処理可能
-    # USBカメラ等にも対応しており，Webカメラ搭載PCで実行する場合はdevice_idの選択に注意
+    # Real-time processing of video being captured is possible if specified by device_id.
+    # USB cameras are also supported, so be careful to select device_id when running on a PC equipped with a webcam.
     # device_id = 0
     # has_capture = input('Capture from camera? [y/n]: ') == 'y'
     has_save = input('Save a video? [y/n]: ') == 'y'
     title = input('title: ') if has_save else ''
 
-    # ダイアログを用いた動画の選択
+    # Video Selection Using Dialog
     # num_of_video = int(input('How many videos?: ')) if is_capture != 'y' else 1
     # file_types = ['mp4' for i in range(num_of_video)]
     # init_dir = './video_in'
@@ -52,7 +52,7 @@ def main():
                       './video_in/0524_a315_w4.mp4',
                       './video_in/0524_a315_w7.mp4']
 
-    # 動画出力コーデック
+    # Video Output Codec
     # .mov
     # fourcc = cv2.VideoWriter_fourcc(*'mp4v')
     # .mp4
@@ -60,10 +60,10 @@ def main():
     video_writer = None
 
     # params for ShiTomasi corner detection
-    # maxCorners:最大検出数，qualityLevel:特徴点とみなす閾値，minDistance:特徴点間最小距離，blockSize:探索窓サイズ
+    # maxCorners:Maximum number of detections，qualityLevel:Threshold to be considered a feature point，minDistance:Minimum distance between feature points，blockSize:Search Window Size
     feature_params = dict(maxCorners=1000, qualityLevel=0.1, minDistance=20, blockSize=7)
     # params for lucas kanade optical flow
-    # winSize:探索窓サイズ，maxLevel:Pyramidsの階層
+    # winSize:Search Window Size，maxLevel:Pyramids Hierarchy
     lk_params = dict(winSize=(15, 15), maxLevel=2,
                      criteria=(cv2.TERM_CRITERIA_EPS | cv2.TERM_CRITERIA_COUNT, 10, 0.03))
     color = np.random.randint(0, 255, (100, 3))
@@ -109,11 +109,11 @@ def main():
             feature, status, track_error = cv2.calcOpticalFlowPyrLK(prev_frame_gray, frame_gray, corners, None,
                                                                     **lk_params)
 
-            # 特徴点の品質無視
+            # Ignore quality of feature points
             good_new = feature
             good_old = corners
 
-            # 特徴点の品質を考慮（途中で特徴点が消失する）
+            # Consider quality of feature points (feature points disappear in the process)
             # good_new = feature[status == 1]
             # good_old = corners[status == 1]
 
@@ -140,14 +140,14 @@ def main():
                 frame = cv2.putText(frame, f'{i + 1}', (a, b), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 255))
             image = cv2.add(frame, mask)
 
-            # 動画を保存しない場合はリアルタイムで表示
+            # Real-time display if video is not saved
             if video_writer is not None:
                 video_writer.write(image)
             else:
                 cv2.imshow('frame', image)
 
                 k = cv2.waitKey(30) & 0xff
-                # ESC キーで終了
+                # ESC key to exit
                 if k == 27:
                     print('press ESC key')
                     break
@@ -168,12 +168,12 @@ def main():
     xs_T = xs.T
     ys_T = ys.T
 
-    # 特徴点ごとのステータス情報 0/1（特徴点の品質が閾値以上で1，それ以下で0）
+    # Status information for each feature point 0/1 (1 if the quality of the feature point is above the threshold, 0 if it is below)
     with open(f'./data_in/{title}_st.csv', 'w', newline='') as f:
         writer = csv.writer(f, delimiter=',')
         writer.writerows(st)
 
-    # 特徴点のx,y座標を出力
+    # Output x,y coordinates of feature points
     with open(f'./data_in/{title}.csv', 'w', newline='') as f:
         writer = csv.writer(f, delimiter=',')
         data = np.hstack((xs_T, ys_T))

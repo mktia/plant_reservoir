@@ -1,3 +1,3 @@
 # video_in directory
 
-プログラムに入力する動画ファイルを格納するディレクトリ．
+Directory for storing video files to be input to the program.

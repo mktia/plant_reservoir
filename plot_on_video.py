@@ -1,5 +1,5 @@
 """
-Woutを動画上に出力する
+Output Wout on video
 """
 from datetime import date
 from tkinter import filedialog

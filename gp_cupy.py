@@ -13,14 +13,14 @@ def classify(output: cp.ndarray) -> cp.ndarray:
 
 
 def correlation_integral(distance_X: cp.ndarray, r: float) -> int:
-    """相関積分を求める
+    """Find the correlation integral
 
     Args:
-        distance_X: 各点の距離 (N x N-1)
-        r: 超球の半径
+        distance_X: Distance between each point (N x N-1)
+        r: Radius of hypersphere
 
     Returns:
-        相関積分の値
+        Value of correlation integral
     """
     N, _ = distance_X.shape
     diff = r - distance_X
@@ -41,13 +41,13 @@ def corr_integral_of_each_params(distance_X: cp.ndarray, r_params: cp.ndarray, u
 
 
 def distance(X: cp.ndarray) -> cp.ndarray:
-    """各点の差の絶対値による距離を求める
+    """Find the distance by the absolute value of the difference between each point
 
     Args:
-        X: 時系列データ (Nステップ x m次元)
+        X: Time series data (N steps x m dimensions)
 
     Returns:
-        各点間の距離の行列
+        Matrix of distances between each point
     """
     N, _ = X.shape
     distance_X = cp.zeros((N, N - 1))
@@ -62,15 +62,15 @@ def dot(X: cp.ndarray, Y: cp.ndarray) -> cp.ndarray:
 
 
 def get_random_units(random_size: int, num_of_select_units: int, removed_units: Set[int]) -> List[int]:
-    """指定した数のユニットのインデックスをランダムに取得する
+    """Randomly obtains the index of a specified number of units
 
     Args:
-        random_size: 取りうるユニット数
-        num_of_select_units: 選択するユニットの数
-        removed_units: 取り除くユニットのインデックス
+        random_size: Number of units that can be taken
+        num_of_select_units: Number of units to select
+        removed_units: Index of units to be removed
 
     Returns:
-        ランダムに取得したインデックスリスト
+        Randomly obtained index list
     """
     units = None
     while True:

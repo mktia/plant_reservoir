@@ -9,7 +9,7 @@ from scipy.signal.windows import hann
 
 
 class Calculate:
-    """演算用モジュール
+    """Operation modules
 
     """
 
@@ -27,15 +27,15 @@ class Calculate:
     @staticmethod
     # @jit(nopython=True)
     def moving_average(data: cp.ndarray, window_size: int, stride_size: int) -> cp.ndarray:
-        """移動平均の計算
+        """Calculation of moving averages
 
         Args:
-            data: 二次元行列
-            window_size: ウィンドウサイズ
-            stride_size: 移動幅サイズ
+            data: two-dimensional matrix
+            window_size: window size
+            stride_size: Moving width size
 
         Returns:
-            移動平均後の二次元行列
+            2D matrix after moving average
         """
         data_length, res_size = data.shape
         averaged_length = (data_length - window_size) // stride_size + 1
@@ -50,7 +50,7 @@ class Calculate:
         """
 
         Args:
-            x: 一次元データ
+            x: one-dimensional data
 
         Returns:
 
@@ -60,40 +60,40 @@ class Calculate:
     @staticmethod
     # @jit(nopython=True)
     def renyi_entropy(x: cp.ndarray, r: float) -> float:
-        """レニーエントロピーの計算
+        """Calculation of Reny-Entropy
 
         Args:
-            x: 正規化された信号データ
-            r: パラメータ
+            x: normalized signal data
+            r: parameter
 
         Returns:
-            レニーエントロピー
+            Renyi entropy
         """
         return cp.log(cp.sum(x ** r)) / (1 - r)
 
     @staticmethod
     def softmax(data: cp.ndarray) -> cp.ndarray:
-        """ソフトマックス関数
+        """softmax function
 
         Args:
-            data: 2次元配列
+            data: two-dimensional array
 
         Returns:
-            ソフトマックス関数を通した2次元配列
+            2D arrays through softmax functions
         """
         return cp.exp(data) / cp.sum(cp.exp(data), axis=1, keepdims=True)
 
     @staticmethod
     def stft(x: cp.ndarray, window: int = 100, overlap: int = None) -> cp.ndarray:
-        """短時間フーリエ変換
+        """short time Fourier transform
 
         Args:
-            x: 一系列の時系列データ
-            window: ウィンドウサイズ
-            overlap: オーバーラップサイズ
+            x: One series of time series data
+            window: window size
+            overlap: overlap size
 
         Returns:
-            短時間フーリエ変換を時間方向に重ねた周波数の分布
+            Distribution of frequencies superimposed on the short-time Fourier transform in the time direction
         """
         if not overlap:
             overlap = window // 2
@@ -108,33 +108,33 @@ class Calculate:
     @staticmethod
     # @jit(nopython=True)
     def tsallis_entropy(x: cp.ndarray, q: float) -> float:
-        """ツァリスエントロピーの計算
+        """Calculation of Tsallis entropy
 
         Args:
-            x: 正規化された信号データ
-            q: パラメータ
+            x: normalized signal data
+            q: parameter
 
         Returns:
-            ツァリスエントロピー
+            Tsaris entropy
         """
         return (1 - cp.sum(x ** q)) / (q - 1)
 
 
 class FileController:
-    """ファイル操作用モジュール
+    """ Module for file manipulation
 
     """
 
     @staticmethod
     def get_file(file_types: List[str], init_dir: str) -> List[str]:
-        """エクスプローラを利用したファイル名の取得
+        """Obtaining file names using Explorer
 
         Args:
-            file_types: 取得したいファイルの拡張子リスト
-            init_dir: 参照するディレクトリの初期設定
+            file_types: List of file extensions to be retrieved
+            init_dir: Initial settings for directories to be referenced
 
         Returns:
-            ファイル名リスト
+            filename list
         """
         root = Tk()
         root.withdraw()

@@ -1,5 +1,5 @@
 """
-CSV編集
+CSV editing
 """
 from numba import jit
 import numpy as np
@@ -9,7 +9,7 @@ from utils import Calculate, FileController
 
 
 def calculate_moving_average() -> None:
-    """移動平均データを作成する
+    """Create moving average data
 
     Returns:
         None
@@ -26,7 +26,7 @@ def calculate_moving_average() -> None:
 
 
 def concatenate_csv() -> None:
-    """CSVを連結する
+    """Concatenate CSVs
 
     Returns:
         None
@@ -50,7 +50,7 @@ def concatenate_csv() -> None:
 
 
 def create_label(class_size: int) -> None:
-    """ラベル作成
+    """Labeling
 
     Returns:
         None
@@ -71,7 +71,7 @@ def create_label(class_size: int) -> None:
 
 
 def drop_feature_points() -> None:
-    """特徴点を消去する．ユニットの最初のインデックスは１（０スタートではない）
+    """Erase feature points. The first index of the unit is 1 (not 0 start).
 
     Returns:
         None
@@ -83,7 +83,7 @@ def drop_feature_points() -> None:
     coords_data = np.loadtxt(coords_file, delimiter=',')
     time_size, reservoir_size = coords_data.shape
 
-    # 入力例（半角スペースで分割）61 68 80 75 9 37 60 84 22
+    # Input example (split by half-width space)61 68 80 75 9 37 60 84 22
     input_nums = np.array([int(i) for i in input('what numbers of feature points drop?: ').split()])
     input_nums = np.hstack((input_nums, input_nums + np.ones_like(input_nums) * reservoir_size // 2))
     input_nums -= np.ones_like(input_nums)
@@ -98,7 +98,7 @@ def drop_feature_points() -> None:
 
 
 def multiple_status() -> None:
-    """追跡精度（ステータス）を反映させる
+    """Reflects tracking accuracy (status)
 
     Returns:
         None
@@ -116,7 +116,7 @@ def multiple_status() -> None:
 
 
 def normalize() -> None:
-    """[0, 1]区間で正規化する
+    """Normalize on the [0, 1] interval
 
     Returns:
         None
@@ -137,7 +137,7 @@ def normalize() -> None:
 
 
 def standardize() -> None:
-    """平均を0にする
+    """set the mean to zero
 
     Returns:
         None
@@ -156,7 +156,7 @@ def standardize() -> None:
 
 
 def start_0() -> None:
-    """時系列の開始を0に合わせる
+    """Set the start of the time series to 0
 
     Returns:
         None
@@ -172,13 +172,13 @@ def start_0() -> None:
     coords_file = FileController.get_file(file_types, init_dir).pop()
     coords_data = np.loadtxt(coords_file, delimiter=',')
 
-    # 初期座標を減算
+    # Subtract initial coordinates
     coords_data = minus(coords_data)
     np.savetxt(f'{coords_file[:-4]}_start0.csv', coords_data, delimiter=',', fmt='%.5e')
 
 
 if __name__ == '__main__':
-    # 使用する関数のコメントアウトを外す
+    # Uncomment out the function you want to use.
     # calculate_moving_average()
     # concatenate_csv()
     # create_label(int(input('How many class?: ')))

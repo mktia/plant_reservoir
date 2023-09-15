@@ -1,37 +1,38 @@
 # data_in directory
 
-プログラムに入力するデータを格納するディレクトリ．
+Directory for storing data to be entered into the program．
 
-`FileController.get_file()` にこのディレクトリを引数で渡すと，GUIでディレクトリ内部のファイルを選択しやすくなる．
+Passing this directory to `FileController.get_file()` as an argument makes it easier to select files in the directory via GUI.
 
-## CSVデータ詳細
+## CSV Data Details
 
-- 1111_l123r123_q1_md20_ws15_label: 6クラス分類，ラベル
-- 1111_l123r123_q1_md20_ws15_fixed: 6クラス分類，生データ
-- 1111_l123r123_q1_md20_ws15_fixed_std: 6クラス分類，標準化済みデータ
-- 1122_a000-315xw147_q1_md20_ws15_fixed: 24クラス分類，生データ
-- 1122_a000-315xw147_q1_md20_ws15_label: 24クラス分類，ラベル
+- 1111_l123r123_q1_md20_ws15_label: 6 classifications, labels
+- 1111_l123r123_q1_md20_ws15_fixed: 6 classification, raw data
+- 1111_l123r123_q1_md20_ws15_fixed_std: 6 classification, standardized data
+- 1122_a000-315xw147_q1_md20_ws15_fixed: 24 classifications, raw data
+- 1122_a000-315xw147_q1_md20_ws15_label: 24 classifications, labels
 
-（ラベルは0,1の行列であるため，プログラム上で生成しても良い）
+(Since the labels are a 0,1 matrix, they may be generated programmatically.)
 
-## 入力データの名称の意味
+## Meaning of input data names
 
-- lr1lr2lr3, l123r123 (6 class): 動画の連結順を示しており，lとrは風向，数字は風速レベルを表す．
-例として，l123r123は以下の表に示す順番で連結した動画から特徴量を抽出したものである．
+- lr1lr2lr3, l123r123 (6 class): The order in which the videos are concatenated is shown, where l and r represent the wind direction and the numbers represent the wind speed level.
+As an example, l123r123 is the feature extracted from the videos concatenated in the order shown in the table below.
 
-|連結順|風向|風速レベル|
+|concatenation order|wind direction|Wind Speed Level|
 |:---:|:---:|---:|
-|1|左|1|
-|2|左|2|
-|3|左|3|
-|4|右|1|
-|5|右|2|
-|6|右|3|
+|1|left|1|
+|2|left|2|
+|3|left|3|
+|4|right|1|
+|5|right|2|
+|6|right|3|
 
-- a000-315xw147 (24 class): 風向を0°から315°まで45°ずつ，
-風速を1, 4, 7（風速レベル1, 2, 3）で変化させたときのデータである．
+- a000-315xw147 (24 class): Wind direction was varied from 0° to 315° by 45°.
+wind speed was varied at 1, 4, and 7 (wind speed levels 1, 2, and 3).
 
-|連結順|風向 (度)|風速レベル|
+
+|concatenation order|wind direction(degree)|Wind Speed Level|
 |:---:|---:|---:|
 |1|0|1|
 |2|0|2|
@@ -58,14 +59,14 @@
 |23|315|2|
 |24|315|3|
 
-- q1: 特徴点抽出時のパラメータ（検出した点を特徴点と認める閾値 q=0.1）
-- md20: 特徴点抽出時のパラメータ（特徴点間距離 20px）
-- ws15: 特徴点抽出時のパラメータ（検出時のウィンドウサイズ 15px）
-- suffix (最後尾の`_`に始まる部分): 以下の表に示す
+- q1: Parameters for feature point extraction (threshold for accepting detected points as feature points q=0.1)
+- md20: Parameters for feature point extraction (distance between feature points 20px)
+- ws15: Parameters for feature point extraction (Window size at detection: 15px)
+- suffix (The part beginning with the trailing `_`.): The following table shows.
 
 |suffix|content|
 |---|---|
-|`_fixed`|検出した全特徴点から植物上の点のみ抽出したデータ（修正済みデータ）|
-|`_label`|データに対応するラベル|
-|`_std`|標準化済みデータ|
-|`_norm`|正規化済みデータ|
+|`_fixed`|Data extracted only from the points on the plant from all detected feature points (modified data)|
+|`_label`|Label corresponding to the data|
+|`_std`|standardized data|
+|`_norm`|normalized data|

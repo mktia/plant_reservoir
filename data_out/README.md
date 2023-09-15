@@ -1,13 +1,12 @@
 # data_out directory
 
-プログラムで出力したデータを保存するディレクトリ．
+Directory for storing data output by the program.
 
-`FileController.export_data()` を用いてデータを出力すると，自動的にこのディレクトリを保存先に使用する．
-ディレクトリ内を整理するために分割しており，使用しなくても良い．
+When `FileController.export_data()` is used to export data, this directory is automatically used as the destination.
+The directory is divided to organize the data and does not need to be used.
 
-## 出力データ名称
+## Output data name
 
-基本的に，出力したデータの名称には分析対象としたファイルの名称を含んでいる．
-また，プログラム実行時に誤って前のデータを消さないようにするため，出力したデータには
-実行した日付や時間をプレフィックスとして付けている．
-分析した内容やパラメータはサフィックスで付けている．
+Basically, the name of the output data includes the name of the file to be analyzed.
+In addition, to prevent accidental deletion of previous data during program execution, the output data is prefixed with the date and time of execution. 
+The analyzed contents and parameters are suffixed.

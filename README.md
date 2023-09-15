@@ -1,47 +1,46 @@
-## 環境構築
+## environment construction
 
-Python 3.7.2 で実行確認済み．
+The program has been tested with Python 3.7.2.
 
-Poetry が使えるのであれば以下の要領でパッケージをインストール可能．
+If you can use Poetry, you can install the package as follows.
 
 ```zsh
 $ git clone https://github.com/mktia/plant_reservoir.git && cd ./plant_reservoir
 $ poetry install
 ```
 
-Poetry 環境でなくても pyproject.toml > `[tool.poetry.dependencies]` で必要なパッケージを確認してインストールすれば良い．
+Even if you are not in the Poetry environment, you can check for and install the necessary packages using pyproject.toml > `[tool.poetry.dependencies]`.
 
-## 各ファイルの概要
+## Summary of each file
 
-- /data_in: 入力データ
-- /data_out: 出力データ
-- /image_out: 出力画像
-- /video_in: 入力動画
-- /video_out: 出力動画
-- [classify.py](classify.py): クラス分類やその結果に関する検証（メイン）
-- [csv_manager.py](csv_manager.py): CSVの前処理
-- [detect_corners_by_gftt.py](detect_corners_by_gftt.py): Shi-Tomasi Corner Detectorで検出した特徴点の確認（静止画）
-- [detect_features.py](detect_features.py): OpenCVで実現できるその他の特徴点検出手法の検証（動画）
-- [gp.py](gp.py): Grassberger-Procaccia法による相関次元の算出
-- [gp_cupy.py](gp_cupy.py): GP法による相関次元の算出（GPU使用）
-- [nn.py](nn.py): 簡易版ResNetによるクラス分類
-- [nn_gpu.py](nn_gpu.py): 簡易版ResNetによるクラス分類（GPU使用）
-- [optical_flow_gftt.py](optical_flow_gftt.py): Optical Flow による物体追跡
-- [pca_dim.py](pca_dim.py): PCA, EMD, Ward法による分布間距離と交差エントロピーの関係性の検証
-- [plot_on_video.py](plot_on_video.py): 動画にWoutを反映
-- [pooling.py](pooling.py): 最大プーリングによる動画サイズの縮小
-- [utils.py](utils.py): 処理の補助
-- [utils_cp.py](utils_cp.py): 処理の補助（GPU使用）
-- [video_manager.py](video_manager.py): 動画の分割・連結など
+- /data_in: input data
+- /data_out: output data
+- /image_out: output image
+- /video_in: input Video
+- /video_out: output Video
+- [classify.py](classify.py): verification of classifications and their results (Main)
+- [csv_manager.py](csv_manager.py): CSV preprocessing
+- [detect_corners_by_gftt.py](detect_corners_by_gftt.py): Confirmation of feature points detected by Shi-Tomasi Corner Detector (still image)
+- [detect_features.py](detect_features.py): Verification of other feature point detection methods that can be realized with OpenCV (video)
+- [gp.py](gp.py): Calculation of the correlation dimension using the Grassberger-Procaccia method
+- [gp_cupy.py](gp_cupy.py): Calculation of correlation dimension by GP method (using GPU)
+- [nn.py](nn.py): Class classification with simplified ResNet
+- [nn_gpu.py](nn_gpu.py): Class classification with simplified ResNet (using GPU)
+- [optical_flow_gftt.py](optical_flow_gftt.py): Object Tracking by Optical Flow
+- [pca_dim.py](pca_dim.py): Verification of relationship between distance between distributions and cross-entropy by PCA, EMD, and Ward methods
+- [plot_on_video.py](plot_on_video.py): Wout reflected in the video
+- [pooling.py](pooling.py): Video size reduction by max pooling
+- [utils.py](utils.py): Processing assistance
+- [utils_cp.py](utils_cp.py): Processing assistance (using GPU)
+- [video_manager.py](video_manager.py): Splitting and concatenating videos, etc.
 
-## GPUの使用について
+## Use of GPU
 
-（GPU使用）と書かれているファイルは CUDA が動いている GPU 環境で
-高速実行するために用意したファイルで，動作させるには実行環境で cupy パッケージのインストールが必要．
+The files marked as (GPU used) are prepared for high-speed execution on a GPU environment running CUDA, and require the cupy package to be installed in the execution environment.
 
-Note: 実行に utils_cp.py が必要なことがある（gp_cupy.py）．
+Note: Sometimes utils_cp.py is required for execution (gp_cupy.py).
 
-## コードの使用方法
+## How to use the code
 
 ### Figure 2 (a), (b)
 
@@ -51,8 +50,8 @@ source: `regression_6class()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-0 (Classification with 6 class) を入力する．
+In the dialog that appears in the terminal after execution, enter
+0 (Classification with 6 classes).
 
 ### Figure 3
 
@@ -62,8 +61,7 @@ source `relation_between_unit_size_and_accuracy()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-2 (Relation between Number of units and accuracy) を入力する．
+In the dialog that appears in the terminal after execution, enter 2 (Relation between Number of units and accuracy).
 
 ### Figure 4 (a), (b)
 
@@ -73,8 +71,7 @@ source: `regression_24class()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-1 (Classification with 24 class) を入力する．
+In the dialog that appears in the terminal after execution, enter 1 (Classification with 24 classes).
 
 ### Figure 5 (a)-(f)
 
@@ -84,10 +81,8 @@ source: `untrained()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-10 (untrained) を入力する．
-また，学習しないクラスは数字で指定する．
-
+In the dialog that appears in the terminal after execution, enter Enter 10 (untrained).
+Also, specify the classes to be unlearned by entering a number.
 
 ### Figure 6
 
@@ -97,8 +92,8 @@ source: `robustness()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-11 (robustness) を入力する．
+In the dialog that appears in the terminal after execution, enter 11 (robustness).
+
 
 ### Figure 7
 
@@ -108,8 +103,8 @@ source: `delay_expansion()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-7 (delay expansion) を入力する．
+In the dialog that appears in the terminal after execution, enter 7 (delay expansion).
+
 
 ### Figure 8
 
@@ -119,8 +114,7 @@ source: `relation_between_unit_size_and_accuracy_by_logistic()` in [classify.py]
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-5 (Relation between Number of units and accuracy by logistic regression) を入力する．
+In the dialog that appears in the terminal after execution, enter 5 (Relation between Number of units and accuracy by logistic regression).
 
 
 ### Supplementary Figure 1 (a), (b)
@@ -131,8 +125,8 @@ source: `regression_6class()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-0 (Classification with 6 class) を入力する．
+In the dialog that appears in the terminal after execution, enter 0 (Classification with 6 class).
+
 
 ### Supplementary Figure 2 (a), (b)
 
@@ -142,8 +136,8 @@ source: `regression_24class()` in [classify.py](classify.py)
 $ python classify.py
 ```
 
-実行後にターミナルに表示されるダイアログで
-1 (Classification with 24 class) を入力する．
+In the dialog that appears in the terminal after execution, enter 1 (Classification with 24 class) .
+
 ### Supplementary Figure 3
 
 source: [3d_graph.py](3d_graph.py)

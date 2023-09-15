@@ -14,15 +14,15 @@ def classify(output: np.ndarray) -> np.ndarray:
 
 
 def get_random_units(size: int, num_of_select_units: int, removed_units: Set[int]) -> List[int]:
-    """指定した数のユニットのインデックスをランダムに取得する
+    """Randomly obtains the index of a specified number of units
 
     Args:
-        random_size: 取りうるユニット数
-        num_of_select_units: 選択するユニットの数
-        removed_units: 取り除くユニットのインデックス
+        random_size: Number of units that can be taken
+        num_of_select_units: Number of units to select
+        removed_units: Index of units to be removed
 
     Returns:
-        ランダムに取得したインデックスリスト
+        Randomly obtained index list
     """
     units = None
     valid_indices = list(set(np.arange(size).tolist()) - set(removed_units))
@@ -59,10 +59,10 @@ def set_graph_params(ax, title: str, xlabel: str, ylabel: str, title_size: Union
 
 
 def main():
-    """分布間距離に着目した時系列データ解析
-    １．縦軸：PCA，横軸：交差エントロピー誤差
-    ２．縦軸：2クラスの選び方30通りにおけるEMDの総和，横軸，同上
-    ３．縦軸：Ward法を用いた1クラスと他の5クラスの分布間距離の総和，横軸：同上
+    """Time series data analysis focusing on distance between distributions
+    １．vertical axis：PCA，horizontal axis：cross entropy error
+    ２．vertical axis：Sum of EMD in 30 ways to choose 2 classes，horizontal axis，cross entropy error
+    ３．vertical axis：Sum of distances between distributions of one class and the other five classes using the Ward method，horizontal axis：cross entropy error
     ＊
 
     """
@@ -105,10 +105,10 @@ def main():
     ignore_indices = set([i for i, x in enumerate(X[0, :]) if x == 0])
     print(f'ignore indices: {sorted(list(ignore_indices))}')
 
-    # ユニット数のリスト
+    # List of number of units
     units_sizes = [5, 10, 15, 20]
     units_len = len(units_sizes)
-    # 試行回数
+    # Number of attempts
     steps = 100
     test_length = (test_T * class_size - window) // stride + 1
     classified = np.zeros((steps, test_length, len(units_sizes)))
@@ -135,7 +135,7 @@ def main():
             cross_entropy = Calculate.cross_entropy(Y_softmax, averaged_test_label)
             errors.append(cross_entropy)
 
-            ## PCAの累積寄与率90%以上となる軸の本数（使用時コメントアウト）
+            ## Number of axes with a cumulative PCA contribution of 90% or more (comment out when used)
             # PCA ->
             # pca = PCA(n_components=0.9, whiten=False)
             # pca.fit(X_selected)
@@ -144,12 +144,12 @@ def main():
             # pca_dims.append(pca_dim)
             # <- PCA
 
-            ## ２クラスの選び方30通りにおける，すべてのクラス間のEMDを計算（使用時コメントアウト）
-            # クラスの選び方を列挙
+            ## Calculate EMD between all classes in 30 different ways of choosing 2 classes (comment out when used)
+            # Enumerate how to choose a class
             # EMD ->
             # class_combi = itertools.combinations([i for i in range(class_size)], 2)
             # emd = 0
-            # # 全組み合わせにおけるEMDの総和
+            # # Sum of EMD for all combinations
             # for combi in class_combi:
             #     c0, c1 = np.array(combi)*8000
             #     each_emd = Calculate.emd(X_selected[c0:c0 + 1000, :], X_selected[c1:c1 + 1000, :])
@@ -157,7 +157,7 @@ def main():
             # emd_list.append(emd)
             # <- EMD
 
-            ## Ward法を用いた2分布間の距離の総和
+            ## Sum of distances between two distributions using Ward's method
             # Ward ->
             d = 0
             for i in range(class_size):
@@ -177,13 +177,13 @@ def main():
     emd_list = np.array(emd_list).reshape(units_len, steps)
     d_list = np.array(d_list).reshape(units_len, steps)
 
-    # ファイル出力（使用時コメントアウト）
+    # File output (commented out when used)
     # FileController.export_data(np.vstack((errors, pca_dims)), coords_file, title='_pca')
     # FileController.export_data(np.vstack((errors, emd_list)), coords_file, title='_emd')
     FileController.export_data(np.vstack((errors, d_list)), coords_file, title='_ward')
 
-    # グラフ出力
-    # 縦軸に取りたい値に応じて２箇所のコメントアウトの変更が必要
+    # Graph output
+    # Two comment-outs need to be changed according to the value you want to take on the vertical axis.
     fig_size = [12, 8]
     plt.rcParams['font.family'] = 'sans-serif'
     plt.rcParams['font.sans-serif'] = ['Arial']
@@ -195,7 +195,7 @@ def main():
     ax = fig.add_subplot()
 
     for i in range(units_len):
-        # 用途に応じてコメントアウト (1)
+        # Comment out according to usage (1)
         # ax.scatter(errors[i], pca_dims[i], color=f'C{i}', marker='x')
         # ax.scatter(errors[i], emd_list[i], color=f'C{i}', marker='x')
         ax.scatter(errors[i], d_list[i], color=f'C{i}', marker='x')
@@ -203,7 +203,7 @@ def main():
               markerscale=2)
     set_graph_params(ax, '', 'Error', 'Sum of distance', title_size, font_size, tick_size)
 
-    # 用途に応じてコメントアウト (2)
+    # Comment out according to usage (2)
     # slope, intercept, info = linear_regression(errors.flatten(), pca_dims.flatten())
     # slope, intercept, info = linear_regression(errors.flatten(), emd_list.flatten())
     slope, intercept, info = linear_regression(errors.flatten(), d_list.flatten())
@@ -212,7 +212,7 @@ def main():
 
     dt = datetime.today().isoformat().replace(':', '-').split('.')[0]
     prev_image_title = f'{dt}_{coords_file.split("/")[-1][:-4]}'
-    # 'tag' は保存内容によって修正したほうがよい
+    # 'tag' should be modified depending on what is saved.
     tag = 'ward'
     fig.savefig(f'./image_out/{prev_image_title}_{tag}.eps', format='eps', dpi=300)
     print('saved')

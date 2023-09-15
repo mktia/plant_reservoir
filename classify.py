@@ -15,16 +15,16 @@ from utils import Calculate, FileController, GraphViewer, MatplotlibExtension
 ### preprocessing
 
 def get_random_indices(valid_units: List, size: int, whole_size: int, is_duplicated=False) -> List:
-    """指定した数のユニットのインデックスをランダムに取得する
+    """Randomly obtains the index of a specified number of units
 
     Args:
-        valid_units: 植物上にあるユニットのインデックスリスト
-        size: 選択するユニットの数
-        whole_size: 検出したすべてのユニットの数
-        is_duplicated: ユニットの属する特徴点に重複を許すか
+        valid_units: Index list of units on the plant
+        size: Number of units to select
+        whole_size: Number of all units detected
+        is_duplicated: Allow overlap in feature points to which the unit belongs?
 
     Returns:
-        ランダムに取得したインデックスリスト
+        Randomly retrieved index list
     """
     if not is_duplicated:
         while True:
@@ -35,10 +35,10 @@ def get_random_indices(valid_units: List, size: int, whole_size: int, is_duplica
 
 
 def import_data(is_6class: bool = True):
-    """データを読み込む
+    """Read data
 
     Args:
-        classified_class: クラス分類の種類 ('6c': 6クラス分類，'24c': 24クラス分類)
+        classified_class: Classification type ('6c': 6-class classification, '24c': 24-class classification)
     """
     print('Select data and label files')
     file_types = ['csv' for i in range(2)]
@@ -52,36 +52,36 @@ def import_data(is_6class: bool = True):
 
 
 def preprocessing_before(data: np.ndarray, is_6class: bool):
-    """事前のパラメータ設定
+    """Preliminary parameter setting
 
     Args:
-        data: 時系列データ
-        classified_class: クラス分類の種類
+        data: time series data
+        classified_class: Classification Type
     """
-    # 1クラスあたりの学習データ，テストデータの時系列長
+    # Time series length of training and test data per class
     T, test_T = (8000, 500) if is_6class else (16000, 1000)
-    # 連結順がl123r123の動画の場合はlr1lr2lr3に繋ぎ直す
+    # If the concatenation order is l123r123 video, re-connect to r1lr2lr3
     coords_data = np.vstack((data[:9315], data[27585:36900], data[9315:18360],
                              data[36900:46245], data[18360:27585], data[46245:])) if is_6class else data
-    # 時系列長を均一にするため各クラスの動画長を記録
+    # Record video length for each class to ensure uniform time series length
     end_frames = [9315, 18630, 27675, 37020, 46245, 55830] if is_6class \
         else [60 * 60 * 5 * (i + 1) - 1 for i in range(24)]
     return T, test_T, coords_data, end_frames
 
 
 def preprocessing(coords_data: np.ndarray, label_data: np.ndarray, is_6class: bool):
-    """データの前処理を行う
+    """Perform data preprocessing
 
     Args:
-        coords_data: 時系列データ
-        label_data: ラベルデータ
-        classified_class: クラス分類の種類
+        coords_data: time series data
+        label_data: label data
+        classified_class: Classification Type
     """
     T, test_T, data, end_frames = preprocessing_before(coords_data, is_6class)
     _, reservoir_size = data.shape
     _, class_size = label_data.shape
 
-    # 各クラスのフレーム数を'T'に調整する
+    # Adjust the number of frames in each class to 'T'
     start = 0
     X = np.ones((1, reservoir_size))
     test_data = np.copy(X)
@@ -105,7 +105,7 @@ def preprocessing(coords_data: np.ndarray, label_data: np.ndarray, is_6class: bo
 ### basis
 
 def regression_6class():
-    """リッジ回帰による6クラス分類
+    """6-class classification by ridge regression
 
     """
     # import data
@@ -114,7 +114,7 @@ def regression_6class():
     # If only use the arbitrary units to train Wout, input 'y'
     if input('Select the arbitrary units? [y/n]') == 'y':
         X_tmp = np.zeros_like(X)
-        # スペース区切りで入力
+        # Space-separated input
         selected_units = [int(i) for i in input('units: ').split()]
         for i in selected_units:
             X_tmp[:, i] = X[:, i]
@@ -194,7 +194,7 @@ def regression_6class():
 
 
 def regression_24class():
-    """リッジ回帰による24クラス分類
+    """24 Class Classification by Ridge Regression
 
     """
     coords_file, (reservoir_size, T, test_T, class_size, X, test_data, label, test_label, test_length) \
@@ -202,7 +202,7 @@ def regression_24class():
 
     if input('Select the arbitrary units? [y/n]') == 'y':
         X_tmp = np.zeros_like(X)
-        # スペース区切りで入力
+        # Space-separated input
         selected_units = [int(i) for i in input('units: ').split()]
         for i in selected_units:
             X_tmp[:, i] = X[:, i]
@@ -283,7 +283,7 @@ def regression_24class():
 ### analysis
 
 def relation_between_unit_size_and_accuracy():
-    """ユニットの数を変更して再学習したときの正解率との関係性
+    """Relationship between the number of units and the percentage of correct answers when the number of units is changed and re-studied
 
     """
     if input('show the graph from a csv file [y/n]: ') == 'y':
@@ -376,7 +376,7 @@ def relation_between_unit_size_and_accuracy():
 
 
 def relation_between_unit_size_and_accuracy_by_logistic():
-    """多項ロジスティック回帰を用いて学習したときのユニット数と正解率の関係性
+    """Relationship between number of units and percentage of correct answers when trained using multinomial logistic regression.
 
     """
     if input('show the graph from a csv file [y/n]: ') == 'y':
@@ -441,7 +441,7 @@ def relation_between_unit_size_and_accuracy_by_logistic():
 
 
 def relation_between_fp_amplitude_variance_and_error():
-    """特徴点の振幅と交差エントロピー誤差の関係性
+    """Relationship between amplitude of feature points and cross-entropy error
 
     """
     coords_file, (
@@ -514,7 +514,7 @@ def relation_between_fp_amplitude_variance_and_error():
 
 
 def accuracy_of_classify():
-    """クラス分類の正解率を出力
+    """Output the percentage of correct classifications
 
     """
     coords_file, (
@@ -540,7 +540,7 @@ def accuracy_of_classify():
 
 
 def delay():
-    """時間遅れの導入
+    """Introduction of time delay
 
     """
     coords_file, (reservoir_size, T, test_T, class_size, X, test_data, label, test_label, test_length) = import_data()
@@ -799,7 +799,7 @@ def correlation_between_time_series():
 
 
 def show_attractor():
-    """アトラクタの画像生成
+    """Image generation for the attractor
 
     """
     coords_file, (reservoir_size, T, test_T, class_size, X, test_data, label, test_label, test_length) = import_data()
@@ -812,14 +812,14 @@ def show_attractor():
 
 
 def untrained():
-    """未学習データに対する反応
+    """Response to unlearned data
 
     """
     coords_file, (reservoir_size, T, test_T, class_size, X, test_data, label, test_label, test_length) = import_data()
 
-    # 5クラス分類の設定を上書き
+    # Override 5-class classification settings.
     class_size = 5
-    # 学習しないクラスのインデックスを入力（0-5）
+    # Enter the index of the class to be unlearned（0-5）.
     drop_class = int(input('Input missed class id: '))
     label = label[:class_size * T, :class_size]
     target_data = np.zeros(reservoir_size)
@@ -878,7 +878,7 @@ def untrained():
 
 
 def robustness():
-    """Woutを徐々に削るときの頑健性の検証
+    """Verification of Robustness when Gradually Cutting Wout
 
     """
     coords_file, (reservoir_size, T, test_T, class_size, X, test_data, label, test_label, test_length) = import_data()
@@ -887,14 +887,14 @@ def robustness():
     Wout = Calculate.ridge_regression(X, label)
     accs = []
     res = []
-    # 基準にするクラスのインデックス
+    # Index of the class to be used as a reference
     for class_id in range(class_size):
         Wout_dropped = np.copy(Wout)
         for j in range(166 // 2 - 1):
-            # 落とすユニットを選択
+            # Select units to drop.
             bool = sorted(np.abs(Wout_dropped[class_id, :]))[-1] <= np.abs(Wout_dropped[class_id, :])
             fp = np.where(bool == True)[0][0] % (reservoir_size // 2)
-            # ユニットを落とす
+            # drop a unit.
             Wout_dropped[:, fp] = 0
             Wout_dropped[:, fp + reservoir_size // 2] = 0
 

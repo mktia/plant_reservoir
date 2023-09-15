@@ -16,7 +16,7 @@ from scipy.optimize import linear_sum_assignment
 
 
 class Calculate:
-    """演算用モジュール
+    """Operation modules
 
     """
 
@@ -61,15 +61,15 @@ class Calculate:
     @staticmethod
     @jit(nopython=True)
     def moving_average(data: np.ndarray, window_size: int, stride_size: int) -> np.ndarray:
-        """移動平均の計算
+        """Calculation of moving averages
 
         Args:
-            data: 二次元行列
-            window_size: ウィンドウサイズ
-            stride_size: 移動幅サイズ
+            data: two-dimensional matrix
+            window_size: window size
+            stride_size: Moving width size
 
         Returns:
-            移動平均後の二次元行列
+            2D matrix after moving average
         """
         data_length, res_size = data.shape
         averaged_length = (data_length - window_size) // stride_size + 1
@@ -89,7 +89,7 @@ class Calculate:
         """
 
         Args:
-            x: 一次元データ
+            x: one-dimensional data
 
         Returns:
 
@@ -100,47 +100,47 @@ class Calculate:
     @staticmethod
     @jit(nopython=True)
     def renyi_entropy(x: np.ndarray, r: float) -> float:
-        """レニーエントロピーの計算
+        """Calculation of Reny-Entropy
 
         Args:
-            x: 正規化された信号データ
-            r: パラメータ
+            x: a normalized signal data
+            r: a parameter
 
         Returns:
-            レニーエントロピー
+            Renyi entropy
         """
         return np.log(np.sum(x ** r)) / (1 - r)
 
     @staticmethod
     def ridge_regression(X: np.ndarray, Y: np.ndarray, reg=1e6) -> np.ndarray:
-        """リッジ回帰の計算
+        """Calculation of Ridge Regression
 
         Args:
-            X: 学習データ
-            Y: ラベル
-            reg: 正則化パラメータ
+            X: a learning data
+            Y: a label
+            reg: a regularization parameter
 
         Returns:
-            リッジ回帰によって得られた重み
+            Weights obtained by ridge regression
         """
         _, eye_size = X.shape
         return np.dot(np.dot(Y.T, X), linalg.inv(np.dot(X.T, X) + reg * np.eye(eye_size)))
 
     @staticmethod
     def softmax(data: np.ndarray) -> np.ndarray:
-        """ソフトマックス関数
+        """softmax function
 
         Args:
-            data: 2次元配列
+            data: a two-dimensional array
 
         Returns:
-            ソフトマックス関数を通した2次元配列
+            2D arrays through softmax functions
         """
         return np.exp(data) / np.sum(np.exp(data), axis=1, keepdims=True)
 
     @staticmethod
     def std(data: np.ndarray) -> np.ndarray:
-        """標準偏差
+        """standard deviation
 
         Args:
             data:
@@ -152,15 +152,15 @@ class Calculate:
 
     @staticmethod
     def stft(x: np.ndarray, window: int = 100, overlap: int = None) -> np.ndarray:
-        """短時間フーリエ変換
+        """short time Fourier transform
 
         Args:
-            x: 一系列の時系列データ
-            window: ウィンドウサイズ
-            overlap: オーバーラップサイズ
+            x: One series of time series data
+            window: window size
+            overlap: overlap size
 
         Returns:
-            短時間フーリエ変換を時間方向に重ねた周波数の分布
+            Distribution of frequencies superimposed on the short-time Fourier transform in the time direction
         """
         if not overlap:
             overlap = window // 2
@@ -184,14 +184,14 @@ class Calculate:
     @staticmethod
     @jit(nopython=True)
     def tsallis_entropy(x: np.ndarray, q: float) -> float:
-        """ツァリスエントロピーの計算
+        """Calculation of Tsallis entropy
 
         Args:
-            x: 正規化された信号データ
-            q: パラメータ
+            x: normalized signal data
+            q: parameter
 
         Returns:
-            ツァリスエントロピー
+            Tsaris entropy
         """
         return (1 - np.sum(x ** q)) / (q - 1)
 
@@ -210,19 +210,19 @@ class Calculate:
 
 
 class FileController:
-    """ファイル操作用モジュール
+    """Module for file manipulation
 
     """
 
     @staticmethod
     def export_data(data: np.ndarray, file_name: str, dir: str = './data_out', title: str = ''):
-        """日付，ファイル名をつけて保存
+        """Save the file with date and file name
 
         Args:
-            data: データ
-            file_name: 使用したファイル名
-            dir: 出力ディレクトリ
-            title: 出力ファイル名
+            data: data
+            file_name: file name used
+            dir: output directory
+            title: output file name
 
         Returns:
             None
@@ -234,14 +234,14 @@ class FileController:
 
     @staticmethod
     def get_file(file_types: List[str], init_dir: str) -> List[str]:
-        """エクスプローラを利用したファイル名の取得
+        """Obtaining file names using Explorer
 
         Args:
-            file_types: 取得したいファイルの拡張子リスト
-            init_dir: 参照するディレクトリの初期設定
+            file_types: List of file extensions to be retrieved
+            init_dir: Initial settings for directories to be referenced
 
         Returns:
-            ファイル名リスト
+            filename list
         """
         root = Tk()
         root.withdraw()
@@ -250,7 +250,7 @@ class FileController:
 
 
 class GraphViewer:
-    """グラフ出力用モジュール
+    """Module for graph output
 
     """
 
