@@ -145,3 +145,8 @@ source: [3d_graph.py](3d_graph.py)
 ```
 $ python 3d_graph.py
 ```
+
+## Data
+
+- Video: https://drive.google.com/drive/folders/1LWd5YxdaYgV7LBGYyNsZEzSrYIuz-2wU?usp=sharing
+- CSV: https://drive.google.com/drive/folders/1YNS0ZcgT-JnNjyp5C_0DHVdh4kBL0n0-?usp=sharing
